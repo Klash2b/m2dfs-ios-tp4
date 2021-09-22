@@ -54,27 +54,41 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return myVar["resultats"]!.count;
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50;
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let innerView = UITableViewCell(frame: CGRect(x: 0, y: (0.10*self.view.frame.maxY + CGFloat(50*indexPath.row)), width: self.view.frame.maxX, height: 60))
+        let innerView = UITableViewCell(frame: CGRect(x: 0, y: (0.10*self.view.frame.maxY + CGFloat(50*indexPath.row)), width: self.view.frame.maxX, height: 50))
         
-        let dateLabel = UILabel(frame: CGRect(x: 0.15*self.view.frame.maxX, y: -5, width: 150, height: 40))
+        let dateLabel = UILabel(frame: CGRect(x: 10, y: 2.5, width: 150, height: 40))
         dateLabel.textAlignment = .left;
         dateLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
         dateLabel.textColor = UIColor.lightGray;
         dateLabel.text = myVar["resultats"]![indexPath.row]["date"]!
+        dateLabel.sizeToFit();
+        //dateLabel.backgroundColor = .gray;
+        dateLabel.autoresizingMask = [.flexibleBottomMargin, .flexibleRightMargin]
         
         let domLogo = UIImageView();
         domLogo.image = UIImage(named: myVar["resultats"]![indexPath.row]["dom_logo_name"]!)
-        domLogo.frame = CGRect(x: 0.05*self.view.frame.maxX, y: 10, width: 40, height: 40)
+        domLogo.frame = CGRect(x: 0, y: dateLabel.frame.height, width: 40, height: 40)
         domLogo.contentMode = .scaleAspectFit;
+        //domLogo.backgroundColor = .green;
+        domLogo.autoresizingMask = [.flexibleRightMargin]
         
-        let domLabel = UILabel(frame: CGRect(x: 0.15*self.view.frame.maxX, y: 10, width: 150, height: 40))
+        let domLabel = UILabel(frame: CGRect(x: domLogo.frame.width, y: dateLabel.frame.height, width: 150, height: 40))
         domLabel.textAlignment = .left;
+        //domLabel.backgroundColor = .blue;
         domLabel.text = myVar["resultats"]![indexPath.row]["dom_name"]!
+        domLabel.autoresizingMask = [.flexibleWidth, .flexibleRightMargin]
         
-        let scoreLabel = UILabel(frame: CGRect(x: 0.35*self.view.frame.maxX, y: 10, width: 150, height: 40))
+        let scoreLabel = UILabel(frame: CGRect(x: domLabel.frame.width, y: dateLabel.frame.height, width: 30, height: 40))
         scoreLabel.textAlignment = .center;
+        //scoreLabel.backgroundColor = .red;
         scoreLabel.font = UIFont.boldSystemFont(ofSize: 16);
+        scoreLabel.autoresizingMask = [.flexibleWidth, .flexibleLeftMargin, .flexibleRightMargin]
+        
         if(myVar["resultats"]![indexPath.row]["score"] != "") {
             
             scoreLabel.text = myVar["resultats"]![indexPath.row]["score"]!
@@ -83,14 +97,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             scoreLabel.text = "-"
         }
         
-        let extLabel = UILabel(frame: CGRect(x: 0.5*self.view.frame.maxX, y: 10, width: 150, height: 40))
-        extLabel.textAlignment = .right;
-        extLabel.text = myVar["resultats"]![indexPath.row]["ext_name"]!
-        
         let extLogo = UIImageView();
         extLogo.image = UIImage(named: myVar["resultats"]![indexPath.row]["ext_logo_name"]!)
-        extLogo.frame = CGRect(x: 0.90*self.view.frame.maxX, y: 10, width: 40, height: 40)
+        extLogo.frame = CGRect(x: innerView.frame.maxX - 40, y: dateLabel.frame.height, width: 40, height: 40)
         extLogo.contentMode = .scaleAspectFit;
+        //extLogo.backgroundColor = .green;
+        extLogo.autoresizingMask = [.flexibleLeftMargin]
+        
+        let extLabel = UILabel(frame: CGRect(x: 40 + 90 + 25, y: dateLabel.frame.height, width: 120, height: 40))
+        extLabel.textAlignment = .right;
+        //extLabel.backgroundColor = .orange;
+        extLabel.text = myVar["resultats"]![indexPath.row]["ext_name"]!
+        extLabel.autoresizingMask = [.flexibleLeftMargin]
         
         innerView.addSubview(dateLabel);
         innerView.addSubview(domLogo);
